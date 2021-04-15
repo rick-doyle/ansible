@@ -3,7 +3,7 @@ PLAY [Copying a Test File] *****************************************************
 
 TASK [Gathering Facts] *********************************************************************************************************************************************************************************************************************
 ok: [target1]
-fatal: [target2]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 175.208.190.121 port 22: Connection timed out", "unreachable": true}
+fatal: [target2]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host x.x.x.x port 22: Connection timed out", "unreachable": true}
 
 TASK [Copying a file] **********************************************************************************************************************************************************************************************************************
 changed: [target1]
