@@ -1,0 +1,42 @@
+-
+  name: "Copying a Test File"
+  hosts: jns1126
+  serial: 2
+  tasks:
+#    -
+#      name: Copying a file
+#      copy: src=/tmp/TestScript.zip dest=/tmp/
+#
+#    -
+#      name: Unzip of TestScript
+#      unarchive:
+#        src: /tmp/TestScript.zip
+#        dest: /tmp/
+#        remote_src: True
+#    -
+#      name: removing zip file
+#      file:
+#        dest: /tmp/TestScript.zip
+#        state: absent
+
+
+    -
+      name: Check for available disk space
+      command: 'df -h'
+      register: spaceVar
+
+    - debug: var=spaceVar.stdout_lines
+
+
+    - name: test for available disk space
+      assert:
+        that:
+          - not {{ item.mount == '/dev/mapper/vg-root' and ( item.size_available < item.size_total - ( item.size_total|float * 0.8 ) ) }}
+      with_items: ansible_mounts
+      ignore_errors: yes
+      register: disk_free
+
+    - debug: var=disk_free.stdout_lines
+#    - name: free disk space
+#      command: "/some/command/that/fixes/it"
+#      when: disk_free|failed

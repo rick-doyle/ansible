@@ -1,0 +1,63 @@
+-
+  name: "Local Servers Services"
+  hosts: TestServers1
+  tasks:
+
+
+########################  Command for Copying a file  ########################
+    - name: Copying a file
+      copy: src=abc.txt dest=/tmp/
+
+
+########################  Command for Date on Local server ########################
+    - name: Check Date
+      shell:
+        "date"
+      register: OutputDate
+    #- debug: var=OutputDate.stdout_lines
+
+########################  Command for Cron Status ########################
+    - name: Check cron status
+      shell:
+        "service crond status | grep 'Active' "
+      register: OutputCron
+    #- debug: var=OutputCron.stdout_lines
+
+
+#########################  Available Space ########################
+    -
+      name: Check for available disk space
+      shell: 'df -h | head -2 | tail -1 | awk -F " " "{print $4}"'
+      register: spaceVar
+
+
+########################  Start MySQL Service ########################
+    - name: Start MySQL Service
+      service:
+        name: mysql, mariadb
+        state: started
+
+
+########################  Start Apache Service ########################
+    - name: Start Apache Service
+      service:
+        name: mysql
+        state: started
+
+
+########################  Start Apache Service ########################
+    - name: Start PMTA Service
+      service:
+        name: pmta
+        state: started
+
+
+    - debug:
+        msg: "Date : {{ OutputDate.stdout_lines }} , Cron : {{ OutputCron.stdout_lines }}, Available Space : {{ spaceVar.stdout_lines }}"
+
+
+
+
+
+
+

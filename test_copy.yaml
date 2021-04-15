@@ -1,0 +1,7 @@
+-
+  name: "Copying a Test File"
+  hosts: TestServers
+  tasks:
+    -
+      name: Copying a file
+      copy: src=abc.txt dest=/tmp/
